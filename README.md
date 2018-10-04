@@ -24,17 +24,18 @@ Solution
 - Start a multipart opeartion using any AWS SDK and get UploadId; Python Boto3 [Create Multipart](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.create_multipart_upload)
 
 - Create a Canonical Request for each part upload using Signature Version 4. For more information, see [Signing AWS Requests with Signature Version 4](https://docs.aws.amazon.com/general/latest/gr/sigv4_signing.html)
+	- Example of Part Upload Canonical Request
 
-	- PUT
-	  /[Replace with S3 Object Key]
-	  uploadId=[Replace with Upload Id]&partNumber=[Replace with 1,2,3...]
-	  date: Fri,28 Sep 2018 11:53:05 UTC
-	  host:[Your bucket name].s3.amazonaws.com
-	  x-amz-content-sha256:a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
-	  x-amz-date:20180928T115305Z
+	 		PUT
+	  		/[Replace with S3 Object Key]
+	  		uploadId=[Replace with Upload Id]&partNumber=[Replace with 1,2,3...]
+	  		date: Fri,28 Sep 2018 11:53:05 UTC
+	  		host:[Your bucket name].s3.amazonaws.com
+	  		x-amz-content-sha256:a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
+	  		x-amz-date:20180928T115305Z
 
-	  date;host;x-amz-content-sha256;x-amz-date
-	  a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
+	  		date;host;x-amz-content-sha256;x-amz-date
+	  		a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
 
 	- Upload each part using client; and add ETag provided by each part upload. e.g Parts [{'PartNumber': 1, 'ETag': 'string'}, {'PartNumber': 2, 'ETag': 'string'}]
 
