@@ -12,7 +12,8 @@ Background
 ==========
 When uploading large file more than 5 GB, we have to use multipart upload by split the large file into severel parts and upload each part, once all parts are uploaded, we have to complete the multipart upload.
 
-What if I am using presigned url? At the time I created this document AWS SDK presigned operation doesn't support to provide additional parameters to get presigned url for part upload. The two paramaters needs to perform part upload operation are partNumber and uploadId.
+What if I want to use presigned url?
+At the time I documented this, AWS SDK presigned operation doesn't support to provide additional parameters to get presigned url for part upload. The two paramaters needs to perform part upload operation are partNumber and uploadId.
 
 Problem
 =======
@@ -32,5 +33,8 @@ Discussion
 ==========
 This will provide you an overview to understand and use of AWS documentation to implement solution.
 
-Did I implemented this solution?
+Have you implement this solution?
 Yes, I implemented using serverless architecture, so I created Lambda function which perform operations create_multipart(), upload_part() and complete_multipart() for the backend; attached Lambda function to API Gateway; Created client library to make API calls; Added multithreadiing to client library to upload multiple parts at the same time.
+
+Is this suppose to be written in Python?
+No, Choose your favourite language and [AWS SDK](https://aws.amazon.com/getting-started/tools-sdks/).
