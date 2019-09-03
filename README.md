@@ -46,7 +46,9 @@ Discussion
 This will provide you an overview to understand and use of AWS documentation to implement a solution.
 
 Have you implemented this solution?
+
 Yes, I implemented using serverless architecture, so I created Lambda function which performs operations create_multipart(), upload_part() and complete_multipart() for the backend; attached Lambda function to API Gateway; Created client library to make API calls; Added multithreading to client library to upload multiple parts at the same time.
 
 Is this suppose to be written in Python?
+
 No, Choose your favorite language and [AWS SDK](https://aws.amazon.com/getting-started/tools-sdks/).
