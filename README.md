@@ -10,10 +10,10 @@ The multipart upload API is designed to improve the upload experience for larger
 
 Background
 ==========
-When uploading large file more than 5 GB, we have to use multipart upload by split the large file into severel parts and upload each part, once all parts are uploaded, we have to complete the multipart upload.
+When uploading large file more than 5 GB, we have to use multipart upload by split the large file into several parts and upload each part, once all parts are uploaded, we have to complete the multipart upload.
 
 What if I want to use presigned url?
-At the time I documented this, AWS SDK presigned operation doesn't support to provide additional parameters to get presigned url for part upload. The two paramaters needs to perform part upload operation are partNumber and uploadId.
+At the time I documented this, AWS SDK presigned operation doesn't support to provide additional parameters to get presigned url for part upload. The two parameters need to perform part upload operations are partNumber and uploadId.
 
 Problem
 =======
@@ -24,29 +24,29 @@ Solution
 - Start a multipart opeartion using any AWS SDK and get UploadId; Python Boto3 [Create Multipart](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.create_multipart_upload)
 
 - Create a Canonical Request for each part upload using Signature Version 4. For more information, see [Signing AWS Requests with Signature Version 4](https://docs.aws.amazon.com/general/latest/gr/sigv4_signing.html)
-	- Example of Part Upload Canonical Request
+- Example of Part Upload Canonical Request
 
-	 		PUT
-	  		/[Replace with S3 Object Key]
-	  		uploadId=[Replace with Upload Id]&partNumber=[Replace with 1,2,3...]
-	  		date: Fri,28 Sep 2018 11:53:05 UTC
-	  		host:[Your bucket name].s3.amazonaws.com
-	  		x-amz-content-sha256:a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
-	  		x-amz-date:20180928T115305Z
+PUT
+ 	/[Replace with S3 Object Key]
+ 	uploadId=[Replace with Upload Id]&partNumber=[Replace with 1,2,3...]
+ 	date: Fri,28 Sep 2018 11:53:05 UTC
+ 	host:[Your bucket name].s3.amazonaws.com
+ 	x-amz-content-sha256:a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
+ 	x-amz-date:20180928T115305Z
 
-	  		date;host;x-amz-content-sha256;x-amz-date
-	  		a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
+ 	date;host;x-amz-content-sha256;x-amz-date
+ 	a973958be9796e1828804c04894509fdf6b70d2c77b62b49bd2cef25674c032b
 
-	- Upload each part using client; and add ETag provided by each part upload. e.g Parts [{'PartNumber': 1, 'ETag': 'string'}, {'PartNumber': 2, 'ETag': 'string'}]
+- Upload each part using client; and add ETag provided by each part upload. e.g Parts [{'PartNumber': 1, 'ETag': 'string'}, {'PartNumber': 2, 'ETag': 'string'}]
 
 * Complete multipart operation using UploadId and Parts. Python Boto3 [Complete Multipart](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.complete_multipart_upload)
 
 Discussion
 ==========
-This will provide you an overview to understand and use of AWS documentation to implement solution.
+This will provide you an overview to understand and use of AWS documentation to implement a solution.
 
-Have you implement this solution?
-Yes, I implemented using serverless architecture, so I created Lambda function which perform operations create_multipart(), upload_part() and complete_multipart() for the backend; attached Lambda function to API Gateway; Created client library to make API calls; Added multithreadiing to client library to upload multiple parts at the same time.
+Have you implemented this solution?
+Yes, I implemented using serverless architecture, so I created Lambda function which performs operations create_multipart(), upload_part() and complete_multipart() for the backend; attached Lambda function to API Gateway; Created client library to make API calls; Added multithreading to client library to upload multiple parts at the same time.
 
 Is this suppose to be written in Python?
-No, Choose your favourite language and [AWS SDK](https://aws.amazon.com/getting-started/tools-sdks/).
+No, Choose your favorite language and [AWS SDK](https://aws.amazon.com/getting-started/tools-sdks/).
